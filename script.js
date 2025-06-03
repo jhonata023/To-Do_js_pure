@@ -20,14 +20,23 @@ const divEditTask = document.querySelector('#divEditTask')
 
 let idEdited
 
-let list = [{id: 1, task: 'Estudar', time: '08:00', date: '2025-04-28'}]
+let list = []
 
 class Task {
-    id = this.id
-    task = this.task
-    time = this.time
-    date = this.date
+    constructor({id, task, time, date}) {
+        this.id = id
+        this.task = task,
+        this.time = time,
+        this.date = date
+    }
 }
+
+list.push(new Task ({
+    id: 1,
+    task: 'Estudar',
+    time: '08:00',
+    date: '2025-04-28'
+}))
 
 function renderTasks (data) {
     taskList.innerHTML = ''
@@ -79,26 +88,28 @@ function clearInputNewTask () {
 renderTasks(list)
 
 btnNewTask.addEventListener('click', () => {
-    const newTask = new Task()
-    let verify = true
-    
-    if (list.length > 0) {
-        newTask.id = list.at(-1).id + 1
+    event.preventDefault()
+    if (inputTask.value != '' && inputTime.value != '' && inputDate.value) {
+        if (list.length > 0) {
+            list.push(new Task({
+                id: list.at(-1).id + 1,
+                task: inputTask.value,
+                time: inputTime.value,
+                date: inputDate.value
+            }))
+        } else {
+            list.push(new Task({
+                id: 1,
+                task: inputTask.value,
+                time: inputTime.value,
+                date: inputDate.value
+            }))
+        }
     } else {
-        newTask.id = 1
-    }
-
-    inputTask.value != '' ? newTask.task = inputTask.value : verify = false
-    inputTime.value != '' ? newTask.time = inputTime.value : verify = false
-    inputDate.value != '' ? newTask.date = inputDate.value : verify = false
-
-    if (verify) {
-        list.push(newTask)
-    } else {
-        errorMsg.innerText = 'Preencha todos os campos'
         errorMsg.style.display = 'block'
+        errorMsg.innerText = 'Preencha todos os campos corretamente'
 
-        setInterval(() => {
+        setTimeout(() => {
             errorMsg.style.display = 'none'
         }, 3000)
     }
@@ -118,6 +129,7 @@ btnCancelEdit.addEventListener('click', () => {
     editInputDate.value = ''
 })
 btnSaveTask.addEventListener('click', () => {
+    event.preventDefault()
     list.forEach(item => {
         if(item.id === idEdited) {
             item.task = editInputTask.value
