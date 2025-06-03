@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+
+    <style>
+        .complete {
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend><h1 id="titleTask">Nova Tarefa</h1></legend>
+
+        <div id="divNewTask">
+            <!-- <form> -->
+                <div id="errorMsg"></div>
+        
+                <label for="task">Tarefa</label>
+                <input type="text" name="task" id="inputTask">
+        
+                <label for="time">Hora</label>
+                <input type="time" name="time" id="inputTime">
+        
+                <label for="date">Data</label>
+                <input type="date" name="date" id="inputDate">
+        
+                <button id="btnNewTask">Cadastrar</button>
+            <!-- </form> -->
+        </div>
+
+        <div id="divEditTask" style="display: none;">
+            <!-- <form> -->
+                <div id="errorMsgEdit"></div>
+                
+                <input type="text" name="" id="editId" style="display: none">
+    
+                <label for="task">Tarefa</label>
+                <input type="text" name="task" id="editInputTask">
+        
+                <label for="time">Hora</label>
+                <input type="time" name="time" id="editInputTime">
+        
+                <label for="date">Data</label>
+                <input type="date" name="date" id="editInputDate">
+        
+                <button id="btnCancelEdit">Cancelar</button>
+                <button id="btnSaveTask">Editar</button>
+            <!-- </form> -->
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend><h1>Lista de Tarefas</h1></legend>
+
+        <div id="taskList"></div>
+    </fieldset>
+
+    <script src="script.js"></script>
+</body>
+</html>
