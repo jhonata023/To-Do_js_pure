@@ -8,21 +8,42 @@
     <style>
         .complete {
             background-color: rgb(0, 92, 128);
-            color: white;
+            color: #f8f9fa;
             font-style: italic;
+            border-radius: 5px;
         }
-        #add {
+        #legend {
+            background-color: #6c757d;
+            color: #f8f9fa;
+        }
+        td:hover {
+            background-color: #ebebeb;
             cursor: pointer;
         }
-        #add:hover, #legend {
-            background-color: rgb(192, 192, 192);
+        .control-month, .title {
+            color: #f8f9fa;
+        }
+        .control-month:hover {
+            cursor: pointer;
+            background-color: #f8f9fa;
+            color: #6c757d;
         }
     </style>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
-<body>
-    <div class="d-flex align-items-center justify-content-center m-0 p-0" style="height: 100vh;">
+<body class="d-flex">
+    <div class="bg-secondary  p-3">
+        <div class="d-flex align-items-center justify-content-center" style="height: 90%;">
+            <div id="calendar"></div>
+        </div>
+
+        <div class="control-month text-center p-2 rounded">
+            <h3 id="add">Adicionar nova Tarefa</h3>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center m-0 p-0 bg-light" style="height: 100vh; width: 100%;">
         <section id="sectionNewTask" class="border rounded m-5 p-4" style="display: none; width: 100%;">
             <h2 id="titleTask" class="text-center">Nova Tarefa</h2>
         
@@ -35,12 +56,17 @@
                         <input type="text" name="task" id="inputTask" class="form-control form-control-lg">
                     </div>
                     
-                    <div class="col-6">
-                        <label for="time"><h5>Hora</h5></label>
-                        <input type="time" name="time" id="inputTime" class="form-control">
+                    <div class="col-4">
+                        <label for="start"><h5>Inicio</h5></label>
+                        <input type="time" name="start" id="inputStart" class="form-control">
+                    </div>
+
+                    <div class="col-4">
+                        <label for="finish"><h5>Término</h5></label>
+                        <input type="time" name="finish" id="inputFinish" class="form-control">
                     </div>
                     
-                    <div class="col-6">
+                    <div class="col-4">
                         <label for="date"><h5>Data</h5></label>
                         <input type="date" name="date" id="inputDate" class="form-control">
                     </div>
@@ -63,12 +89,17 @@
                         <input type="text" name="task" id="editInputTask" class="form-control form-control-lg">
                     </div>
             
-                    <div class="col-6">
-                        <label for="time"><h5>Hora</h5></label>
-                        <input type="time" name="time" id="editInputTime" class="form-control">
+                    <div class="col-4">
+                        <label for="start"><h5>início</h5></label>
+                        <input type="time" name="start" id="editInputStart" class="form-control">
+                    </div>
+
+                    <div class="col-4">
+                        <label for="finish"><h5>Término</h5></label>
+                        <input type="time" name="finish" id="editInputFinish" class="form-control">
                     </div>
             
-                    <div class="col-6">
+                    <div class="col-4">
                         <label for="date"><h5>Data</h5></label>
                         <input type="date" name="date" id="editInputDate" class="form-control">
                     </div>
@@ -81,17 +112,18 @@
             </div>
         </section>
 
-        <section id="sectionTasks" class="border rounded text-center m-5 p-4" style="width: 100%;">
+        <section id="sectionTasks" class="border rounded text-center m-5 p-4 shadow" style="width: 100%;">
             <div class="text-center mb-5 d-flex justify-content-center">
                 <h2 class="m-0 align-content-center" style="width: 25%;">Lista de Tarefas</h2>
-                <h1 id="add" class="m-0 pb-1 pl-1 pr-1 border rounded">+</h1>
+                <!-- <h1 id="add" class="m-0 pb-1 pl-1 pr-1 border rounded shadow-sm">+</h1> -->
             </div>
 
             <div id="legend" class="d-flex text-center border rounded mb-3">
-                <p class="m-0 align-content-center" style="width: 25%;">Tarefa</p>
-                <p class="m-0 align-content-center" style="width: 25%;">Hora</p>
-                <p class="m-0 align-content-center" style="width: 25%;">Data</p>
-                <div class="m-0 align-content-center" style="width: 25%;">Ações</div>
+                <p class="m-0 align-content-center" style="width: 20%;">Tarefa</p>
+                <p class="m-0 align-content-center" style="width: 20%;">Inicio</p>
+                <p class="m-0 align-content-center" style="width: 20%;">Término</p>
+                <p class="m-0 align-content-center" style="width: 20%;">Data</p>
+                <div class="m-0 align-content-center" style="width: 20%;">Ações</div>
                 <hr>
             </div>
             <div id="taskList" class=""></div>
