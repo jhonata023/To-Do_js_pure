@@ -12,11 +12,12 @@ const btnNewTask = document.querySelector('#btnNewTask')
 const taskList = document.querySelector('#taskList')
 const btnsEdit = document.querySelectorAll('.edit')
 const btnSaveTask = document.querySelector('#btnSaveTask')
-const btnCancelEdit = document.querySelector('#btnCancelEdit')
+const btnCancelEdit = document.querySelectorAll('.btnCancelEdit')
 
 const errorMsg = document.querySelector('#errorMsg')
 const divNewTask = document.querySelector('#divNewTask')
 const divEditTask = document.querySelector('#divEditTask')
+const addTask = document.querySelector('#add')
 
 let idEdited
 
@@ -37,19 +38,33 @@ list.push(new Task ({
     time: '08:00',
     date: '2025-04-28'
 }))
+list.push(new Task ({
+    id: 1,
+    task: 'Cozinhar',
+    time: '12:00',
+    date: '2025-04-28'
+}))
+list.push(new Task ({
+    id: 1,
+    task: 'Arrumar casa',
+    time: '14:00',
+    date: '2025-04-28'
+}))
 
 function renderTasks (data) {
     taskList.innerHTML = ''
     for (let i = 0; i < list.length; i++) {
         taskList.innerHTML += `
         <fieldset>
-            <div id="`+ list[i].id +`">
-                <h4>`+ list[i].task +`</h4>
-                <p>`+ list[i].time +`</p>
-                <p>`+ list[i].date +`</p>
-                <button onclick="btnDoneTask(`+ list[i].id +`)">Concluir</button>
-                <button class="edit" onclick="btnEditTask(`+ list[i].id +`)">Editar</button>
-                <button class="delete" onclick="deleteTask(`+ list[i].id +`)">Excluir</button>
+            <div id="`+ list[i].id +`" class="d-flex border-bottom p-2">
+                <h4 class="m-0 align-content-center" style="width: 25%;">`+ list[i].task +`</h4>
+                <p class="m-0 align-content-center" style="width: 25%;">`+ list[i].time +`</p>
+                <p class="m-0 align-content-center" style="width: 25%;">`+ list[i].date +`</p>
+                <div class="d-flex flex-row justify-content-around" style="width: 25%;">
+                    <button class="btn btn-success" onclick="btnDoneTask(`+ list[i].id +`)">Concluir</button>
+                    <button class="edit btn btn-warning" onclick="btnEditTask(`+ list[i].id +`)">Editar</button>
+                    <button class="delete btn btn-danger" onclick="deleteTask(`+ list[i].id +`)">Excluir</button>
+                </div>
             </div>
         </fieldset>`
     }
@@ -64,9 +79,11 @@ function btnEditTask (id) {
     titleTask.innerText = 'Editar Tarefa'
     taskList.parentNode.style.display = 'none'
 
+    document.querySelector('#sectionNewTask').style.display = 'block'
+    document.querySelector('#sectionTasks').style.display = 'none'
+
     idEdited = id
     const taskEdit = list.filter(task => task.id === id)
-    const index = list.findIndex(task => task.id === id)
     
     editId.value = id
     editInputTask.value = taskEdit[0].task
@@ -83,6 +100,27 @@ function clearInputNewTask () {
     inputTask.value = ''
     inputTime.value = ''
     inputDate.value = ''
+}
+function cancelEdit (option) {
+    event.preventDefault()
+    document.querySelector('#sectionNewTask').style.display = 'none'
+    document.querySelector('#sectionTasks').style.display = 'block'
+    
+    if (option == 'edit') {
+        divNewTask.style.display = 'block'
+        divEditTask.style.display = 'none'
+        titleTask.innerText = 'Nova Tarefa'
+        taskList.parentNode.style.display = 'block'
+
+        editId.value = ''
+        editInputTask.value = ''
+        editInputTime.value = ''
+        editInputDate.value = ''
+    } else if (option == 'new') {
+        inputTask.value = ''
+        inputTime.value = ''
+        inputDate.value = ''
+    }
 }
 
 renderTasks(list)
@@ -105,6 +143,9 @@ btnNewTask.addEventListener('click', () => {
                 date: inputDate.value
             }))
         }
+
+        document.querySelector('#sectionNewTask').style.display = 'none'
+        document.querySelector('#sectionTasks').style.display = 'block'
     } else {
         errorMsg.style.display = 'block'
         errorMsg.innerText = 'Preencha todos os campos corretamente'
@@ -116,17 +157,6 @@ btnNewTask.addEventListener('click', () => {
 
     renderTasks(list)
     clearInputNewTask()
-})
-btnCancelEdit.addEventListener('click', () => {
-    divNewTask.style.display = 'block'
-    divEditTask.style.display = 'none'
-    titleTask.innerText = 'Nova Tarefa'
-    taskList.parentNode.style.display = 'block'
-
-    editId.value = ''
-    editInputTask.value = ''
-    editInputTime.value = ''
-    editInputDate.value = ''
 })
 btnSaveTask.addEventListener('click', () => {
     event.preventDefault()
@@ -143,5 +173,12 @@ btnSaveTask.addEventListener('click', () => {
     titleTask.innerText = 'Nova Tarefa'
     taskList.parentNode.style.display = 'block'
 
+    document.querySelector('#sectionNewTask').style.display = 'none'
+    document.querySelector('#sectionTasks').style.display = 'block'
+
     renderTasks(list)
+})
+addTask.addEventListener('click', () => {
+    document.querySelector('#sectionNewTask').style.display = 'block'
+    document.querySelector('#sectionTasks').style.display = 'none'
 })

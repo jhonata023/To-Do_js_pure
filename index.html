@@ -7,57 +7,96 @@
 
     <style>
         .complete {
-            background-color: aqua;
+            background-color: rgb(0, 92, 128);
+            color: white;
+            font-style: italic;
+        }
+        #add {
+            cursor: pointer;
+        }
+        #add:hover, #legend {
+            background-color: rgb(192, 192, 192);
         }
     </style>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-    <fieldset>
-        <legend><h1 id="titleTask">Nova Tarefa</h1></legend>
+    <div class="d-flex align-items-center justify-content-center m-0 p-0" style="height: 100vh;">
+        <section id="sectionNewTask" class="border rounded m-5 p-4" style="display: none; width: 100%;">
+            <h2 id="titleTask" class="text-center">Nova Tarefa</h2>
+        
+            <div id="divNewTask">
+                <form class="form-group row justify-content-center">
+                    <div id="errorMsg"></div>
+                    
+                    <div class="col-12 mb-3">
+                        <label for="task"><h5>Tarefa</h5></label>
+                        <input type="text" name="task" id="inputTask" class="form-control form-control-lg">
+                    </div>
+                    
+                    <div class="col-6">
+                        <label for="time"><h5>Hora</h5></label>
+                        <input type="time" name="time" id="inputTime" class="form-control">
+                    </div>
+                    
+                    <div class="col-6">
+                        <label for="date"><h5>Data</h5></label>
+                        <input type="date" name="date" id="inputDate" class="form-control">
+                    </div>
+                    
+                    <div class="mt-3 d-flex justify-content-around" style="width: 50%;">
+                        <button class="btnCancelEdit btn btn-warning" onclick="cancelEdit('new')">Voltar</button>
+                        <button type="submit" id="btnNewTask" class="btn btn-success">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
+        
+            <div id="divEditTask" style="display: none;">
+                <form class="form-group row justify-content-center">
+                    <div id="errorMsgEdit"></div>
+                    
+                    <input type="text" name="" id="editId" style="display: none">
+                    
+                    <div class="col-12 mb-3">
+                        <label for="task"><h5>Tarefa</h5></label>
+                        <input type="text" name="task" id="editInputTask" class="form-control form-control-lg">
+                    </div>
+            
+                    <div class="col-6">
+                        <label for="time"><h5>Hora</h5></label>
+                        <input type="time" name="time" id="editInputTime" class="form-control">
+                    </div>
+            
+                    <div class="col-6">
+                        <label for="date"><h5>Data</h5></label>
+                        <input type="date" name="date" id="editInputDate" class="form-control">
+                    </div>
+            
+                    <div class="mt-3 d-flex justify-content-around" style="width: 50%;">
+                        <button class="btnCancelEdit btnCancelEdit btn btn-warning" onclick="cancelEdit('edit')">Cancelar</button>
+                        <button id="btnSaveTask" class="btn btn-primary">Editar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
 
-        <div id="divNewTask">
-            <form>
-                <div id="errorMsg"></div>
-        
-                <label for="task">Tarefa</label>
-                <input type="text" name="task" id="inputTask">
-        
-                <label for="time">Hora</label>
-                <input type="time" name="time" id="inputTime">
-        
-                <label for="date">Data</label>
-                <input type="date" name="date" id="inputDate">
-        
-                <button type="submit" id="btnNewTask">Cadastrar</button>
-            </form>
-        </div>
+        <section id="sectionTasks" class="border rounded text-center m-5 p-4" style="width: 100%;">
+            <div class="text-center mb-5 d-flex justify-content-center">
+                <h2 class="m-0 align-content-center" style="width: 25%;">Lista de Tarefas</h2>
+                <h1 id="add" class="m-0 pb-1 pl-1 pr-1 border rounded">+</h1>
+            </div>
 
-        <div id="divEditTask" style="display: none;">
-            <form>
-                <div id="errorMsgEdit"></div>
-                
-                <input type="text" name="" id="editId" style="display: none">
-    
-                <label for="task">Tarefa</label>
-                <input type="text" name="task" id="editInputTask">
-        
-                <label for="time">Hora</label>
-                <input type="time" name="time" id="editInputTime">
-        
-                <label for="date">Data</label>
-                <input type="date" name="date" id="editInputDate">
-        
-                <button id="btnCancelEdit">Cancelar</button>
-                <button id="btnSaveTask">Editar</button>
-            </form>
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend><h1>Lista de Tarefas</h1></legend>
-
-        <div id="taskList"></div>
-    </fieldset>
+            <div id="legend" class="d-flex text-center border rounded mb-3">
+                <p class="m-0 align-content-center" style="width: 25%;">Tarefa</p>
+                <p class="m-0 align-content-center" style="width: 25%;">Hora</p>
+                <p class="m-0 align-content-center" style="width: 25%;">Data</p>
+                <div class="m-0 align-content-center" style="width: 25%;">Ações</div>
+                <hr>
+            </div>
+            <div id="taskList" class=""></div>
+        </section>
+    </div>
 
     <script src="script.js"></script>
 </body>
